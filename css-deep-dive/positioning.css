@@ -1,0 +1,30 @@
+body {
+  background: lightgrey;
+}
+
+#container {
+  width: 80%;
+  margin: 150px auto;
+  background: #FFF;
+  padding: 40px;
+}
+
+#one, #two, #three {
+  width: 100px;
+  height: 100px;
+  text-align: center;
+}
+
+#one {
+  background: red;
+}
+
+#two {
+  background: yellow;
+}
+
+#three {
+  background: blue;
+}
+
+p {margin:auto;}
