@@ -19,10 +19,44 @@ body {
   background: -webkit-repeating-linear-gradient(-45deg, rgba(255,255,255,.1), rgba(255,255,255,0) 12px), -webkit-linear-gradient(#F5A8A8, #F08080);
 
   -webkit-animation-name: slide;
+  -moz-animation-name:    slide;
+  -o-animation-name:      slide;
+  animation-name:         slide;
+
   -webkit-animation-duration: 2s;
+  -moz-animation-duration:    2s;
+  -o-animation-duration:      2s;
+  animation-duration:         2s;
+
+  -webkit-animation-timing-function: linear;
+  -moz-animation-timing-function:    linear;
+  -o-animation-timing-function:      linear;
+  animation-timing-function:         linear;
+
 }
 
 @-webkit-keyframes slide {
+  0%   { width:   0%; }
+  30%,
+  60%  { width:  50%; }
+  70%  { width:  80%; }
+  100% { width: 100%; }
+}
+@-moz-keyframes slide {
+  0%   { width:   0%; }
+  30%,
+  60%  { width:  50%; }
+  70%  { width:  80%; }
+  100% { width: 100%; }
+}
+@-o-keyframes slide {
+  0%   { width:   0%; }
+  30%,
+  60%  { width:  50%; }
+  70%  { width:  80%; }
+  100% { width: 100%; }
+}
+@keyframes slide {
   0%   { width:   0%; }
   30%,
   60%  { width:  50%; }
