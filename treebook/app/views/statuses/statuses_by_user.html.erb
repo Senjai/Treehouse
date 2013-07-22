@@ -1,0 +1,9 @@
+<div class="page-header">
+  <h1><%= @user.full_name %></h1>
+</div>
+
+<% @statuses.each do |status| %>
+  <div class="well">
+    <%= status.content %>
+  </div>
+<% end %>

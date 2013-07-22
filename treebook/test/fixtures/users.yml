@@ -1,5 +1,17 @@
 jason:
   first_name: "Jason"
   last_name: "Seifer"
-  profile_name: "jseifer"
-  email: "123@abc.com"
+  email: "jason@teamtreehouse.com"
+  profile_name: "jasonseifer"
+
+jim:
+  first_name: "Jim"
+  last_name: "Hoskins"
+  email: "jim@teamtreehouse.com"
+  profile_name: "jimhoskins"
+
+mike:
+  first_name: "Mike"
+  last_name: "The Frog"
+  email: "mike@teamtreehouse.com"
+  profile_name: "mikethefrog"
