@@ -36,7 +36,7 @@ class StatusesController < ApplicationController
 
   # GET /statuses/1/edit
   def edit
-    @status = Status.find(params[:id])
+    @status = current_user.statuses.find(params[:id])
   end
 
   # POST /statuses
@@ -58,7 +58,10 @@ class StatusesController < ApplicationController
   # PUT /statuses/1
   # PUT /statuses/1.json
   def update
-    @status = Status.find(params[:id])
+    @status = current_user.statuses.find(params[:id])
+    if params[:status].has_key? :user_id && params[:status]
+      params[:status].delete :user_id
+    end
 
     respond_to do |format|
       if @status.update_attributes(params[:status])

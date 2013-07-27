@@ -1,5 +1,5 @@
 Treebook::Application.routes.draw do
-  get "profiles/show"
+  get "profile", to: 'profiles#current_profile'
 
   devise_for :users
 
