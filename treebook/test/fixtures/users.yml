@@ -3,6 +3,7 @@ jason:
   last_name: "Seifer"
   email: "jason@teamtreehouse.com"
   profile_name: "jasonseifer"
+  encrypted_password: $2a$10$VnbwfikZl/AWES1WydSUtefPDsahkd4W6v1t8toCy/guujPxNRMRG
 
 jim:
   first_name: "Jim"
