@@ -9,10 +9,11 @@ gem 'rails', '3.2.13'
 gem 'devise'
 gem 'simple_form'
 gem 'state_machine'
-gem 'factory_girl'
+
 
 group :test do
   gem 'shoulda'
+  gem 'factory_girl_rails'
 end
 
 group :test, :development do
