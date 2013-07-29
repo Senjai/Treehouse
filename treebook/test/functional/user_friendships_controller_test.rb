@@ -1,6 +1,51 @@
 require 'test_helper'
 
 class UserFriendshipsControllerTest < ActionController::TestCase
+  context "#index" do
+    context "when not logged in" do
+      should "be redirected to login page" do
+        get :index
+        assert_response :redirect
+        assert_redirected_to login_path
+      end
+    end
+
+    context "when logged in" do
+      setup do
+        @friendship1 = create(:pending_user_friendship, user: users(:jason), friend: create(:user, first_name: 'Pending',                                                                                         last_name: 'Friend'))
+        @friendship2 = create(:accepted_user_friendship, user: users(:jason), friend: create(:user, first_name: 'Active',                                                                                         last_name: 'Friend'))
+
+        sign_in users(:jason)
+        get :index
+      end
+
+      should "get index page without error" do
+        assert_response :success
+      end
+
+      should "assign user friendships" do
+        assert assigns(:user_friendships)
+      end
+
+      should "display friends names" do
+        assert_match /Pending/, response.body
+        assert_match /Active/, response.body
+      end
+
+      should "display pending information on a pending friendship" do
+        assert_select "#user_friendship_#{@friendship1.id}" do
+          assert_select "em", "Friendship Pending."
+        end
+      end
+
+      should "display accepted information on a accepted friendship" do
+        assert_select "#user_friendship_#{@friendship2.id}" do
+          assert_select "em", "Friendship Started."
+        end
+      end
+    end
+  end
+
   context "#new" do
     context "when not logged in" do
       should "be redirected to login page" do
@@ -103,7 +148,7 @@ class UserFriendshipsControllerTest < ActionController::TestCase
         end
 
         should "create a friendship" do
-          assert users(:jason).friends.include? users(:mikethefrog)
+          assert users(:jason).pending_friends.include? users(:mikethefrog)
         end
 
         should "redirect to friends profile page" do

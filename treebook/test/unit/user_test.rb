@@ -56,7 +56,7 @@ class UserTest < ActiveSupport::TestCase
 
   test "that creating friends works" do
     (users(:jason).friends << users(:mikethefrog)).reload
-    users(:jason).friends.include? users(:mikethefrog)
+    assert users(:jason).pending_friends.include? users(:mikethefrog)
   end
 
   test "that creating friends with a user id and friend id works" do
