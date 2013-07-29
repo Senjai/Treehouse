@@ -40,7 +40,7 @@ class UserFriendshipsControllerTest < ActionController::TestCase
 
       should "display accepted information on a accepted friendship" do
         assert_select "#user_friendship_#{@friendship2.id}" do
-          assert_select "em", "Friendship Started."
+          assert_select "em", "Friendship Started. #{@friendship2.created_at}"
         end
       end
     end
@@ -183,7 +183,9 @@ class UserFriendshipsControllerTest < ActionController::TestCase
 
     context "when logged in" do
       setup do
-        @user_friendship = create(:pending_user_friendship, user: users(:jason))
+        @friend = create(:user)
+        @user_friendship = create(:pending_user_friendship, user: users(:jason), friend: @friend)
+        create(:pending_user_friendship, user: @friend, friend: users(:jason))
         sign_in users(:jason)
         put :accept, id: @user_friendship
         @user_friendship.reload
@@ -234,4 +236,35 @@ class UserFriendshipsControllerTest < ActionController::TestCase
       end
     end
   end
+
+  context "#destroy" do
+    context "when not logged in" do
+      should "redirect to login page" do
+        delete :destroy, id: 1
+        assert_response :redirect
+        assert_redirected_to login_path
+      end
+    end
+
+    context "when logged in" do
+      setup do
+        @friend = create(:user)
+        @user_friendship = create(:accepted_user_friendship, friend: @friend, user: users(:jason))
+        create(:accepted_user_friendship, friend: users(:jason), user: @friend)
+        sign_in users(:jason)
+      end
+
+      should "delete user relationships" do
+        assert_difference "UserFriendship.count", -2 do
+          delete :destroy, id: @user_friendship
+        end
+      end
+
+      should "set the flash" do
+        delete :destroy, id: @user_friendship
+        assert_equal "Friendship Destroyed", flash[:success]
+      end
+    end
+  end
+
 end
