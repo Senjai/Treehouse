@@ -45,8 +45,9 @@ class UserFriendshipsController < ApplicationController
   end
 
   def edit
-    @user_friendship = current_user.user_friendships.find(params[:id])
-    @friend = @user_friendship.friend
+    u_f = current_user.user_friendships.find(params[:id])
+    @user_friendship = u_f.decorate
+    @friend = u_f.friend
   end
 
   def destroy
