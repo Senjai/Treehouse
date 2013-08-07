@@ -11,15 +11,15 @@
   <div class="span7">
     <strong><%= friend.full_name %></strong><br />
     <% if friendship.requested? %>
-    <em>Friendship Requested.</em> <%= link_to "Accept Friendship", edit_user_friendship_path(friendship) %>.
+    <em>Friendship Requested.</em> <%= link_to "Accept Friendship", edit_user_friendship_path(friend) %>.
     <% end %>
 
     <% if friendship.pending? %>
-    <em>Friendship Pending.</em> <%= link_to "Delete Request", edit_user_friendship_path(friendship) %>.
+    <em>Friendship Pending.</em> <%= link_to "Delete Request", edit_user_friendship_path(friend) %>.
     <% end %>
 
     <% if friendship.accepted? %>
-    <em>Friendship Started. <%= friendship.created_at %></em> <%= link_to "Update Friendship", edit_user_friendship_path(friendship) %>.
+    <em>Friendship Started. <%= friendship.created_at %></em> <%= link_to "Update Friendship", edit_user_friendship_path(friend) %>.
     <% end %>
 
   </div>

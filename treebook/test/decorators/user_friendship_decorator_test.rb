@@ -9,7 +9,7 @@ class UserFriendshipDecoratorTest < Draper::TestCase
       end
 
       should "return the correct message" do
-        assert_equal @decorator.sub_message, "Do you really want to be friends with Jim?"
+        assert_equal @decorator.sub_message, "Friend Request Pending."
       end
     end
 
