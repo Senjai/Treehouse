@@ -220,7 +220,7 @@ class UserFriendshipsControllerTest < ActionController::TestCase
       setup do
         sign_in users(:jason)
         @user_friendship = create(:pending_user_friendship, user: users(:jason))
-        get :edit, id: @user_friendship
+        get :edit, id: @user_friendship.friend.profile_name
       end
 
       should "get edit page when logged in" do
