@@ -4,3 +4,6 @@ Metaprogramming Ruby
 Practical Object Oriented Design in Ruby (poodr.info)
 CLI Applications in Ruby
 Eloquent Ruby
+
+Data Structures" by Seymour Lipschutz
+Understanding Computation Oreily Media
