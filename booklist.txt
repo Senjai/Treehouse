@@ -1,0 +1,6 @@
+enjai: i also liked eloquent ruby, and rails antipatterns
+
+Metaprogramming Ruby
+Practical Object Oriented Design in Ruby (poodr.info)
+CLI Applications in Ruby
+Eloquent Ruby
