@@ -14,6 +14,10 @@ class UserFriendshipsControllerTest < ActionController::TestCase
       setup do
         @friendship1 = create(:pending_user_friendship, user: users(:jason), friend: create(:user, first_name: 'Pending',                                                                                         last_name: 'Friend'))
         @friendship2 = create(:accepted_user_friendship, user: users(:jason), friend: create(:user, first_name: 'Active',                                                                                         last_name: 'Friend'))
+        @friendship3 = create(:requested_user_friendship, user: users(:jason), friend: create(:user, first_name: 'Requested',                                                                                         last_name: 'Friend'))
+        @friendship4 = user_friendships(:blocked_by_jason)
+        @friendship5 = create(:requested_user_friendship, friend: users(:jason), user: create(:user, first_name: 'Requested', last_name: 'Friend'))
+
 
         sign_in users(:jason)
         get :index
@@ -41,6 +45,75 @@ class UserFriendshipsControllerTest < ActionController::TestCase
       should "display accepted information on a accepted friendship" do
         assert_select "#user_friendship_#{@friendship2.id}" do
           assert_select "em", "Friendship Started. #{@friendship2.created_at}"
+        end
+      end
+
+      context "blocked users" do
+        setup do
+          get :index, list: 'blocked'
+        end
+
+        should("get the index without error") {assert_response :success}
+
+        should "not display pending or active friends names" do
+          assert_no_match /Pending\ Friend/, response.body
+          assert_no_match /Active\ Friend/, response.body
+        end
+
+        should "display blocked users names" do
+          assert_match /Blocked\ Friend/, response.body
+        end
+      end
+
+      context "pending users" do
+        setup do
+          get :index, list: 'pending'
+        end
+
+        should("get the index without error") {assert_response :success}
+
+        should "not display blocked or active friends names" do
+          assert_no_match /Blocked\ Friend/, response.body
+          assert_no_match /Active\ Friend/, response.body
+        end
+
+        should "display pending users names" do
+          assert_match /Pending\ Friend/, response.body
+        end
+      end
+
+      context "active users" do
+        setup do
+          get :index, list: 'active'
+        end
+
+        should("get the index without error") {assert_response :success}
+
+        should "not display pending or blocked friends names" do
+          assert_no_match /Pending\ Friend/, response.body
+          assert_no_match /Blocked\ Friend/, response.body
+        end
+
+        should "display active users names" do
+          assert_match /Active\ Friend/, response.body
+        end
+      end
+
+      context "requested users" do
+        setup do
+          get :index, list: 'requested'
+        end
+
+        should("get the index without error") {assert_response :success}
+
+        should "not display pending or blocked friends names" do
+          assert_no_match /Pending\ Friend/, response.body
+          assert_no_match /Blocked\ Friend/, response.body
+          assert_no_match /Active\ Friend/, response.body
+        end
+
+        should "display active users names" do
+          assert_match /Requested\ Friend/, response.body
         end
       end
     end
