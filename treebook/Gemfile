@@ -17,10 +17,18 @@ group :test do
   gem 'factory_girl_rails'
 end
 
-group :test, :development do
-  gem 'sqlite3'
+group :development do
+  gem 'thin'
 end
 
+group :test, :development do
+  gem 'sqlite3'
+  gem 'log_buddy'
+end
+
+group :production do
+  gem 'pg'
+end
 
 # Gems used only for assets and not required
 # in production environments by default.
