@@ -45,7 +45,7 @@ class User < ActiveRecord::Base
                                       foreign_key: :user_id,
                                       conditions: { state: 'blocked' }
 
-  has_many :blocked_friends, through: :requested_user_friendships, source: :friend
+  has_many :blocked_friends, through: :blocked_user_friendships, source: :friend
 
 
   def full_name
@@ -59,5 +59,9 @@ class User < ActiveRecord::Base
   def gravatar_url
     hash = Digest::MD5.hexdigest email.strip.downcase
     "http://gravatar.com/avatar/#{hash}"
+  end
+
+  def has_blocked?(other_user)
+    blocked_friends.include? other_user
   end
 end
