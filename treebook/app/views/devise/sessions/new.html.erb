@@ -1,26 +1,30 @@
-
+<br />
 <div class="row">
 	<div class="span4">
-	<%= simple_form_for(resource, :as => resource_name, :url => session_path(resource_name), html: {class: "well"}) do |f| %>
+	<%= simple_form_for(resource, :as => resource_name, :url => session_path(resource_name), html: {class: "well form-vertical well-small"}) do |f| %>
 
 		<fieldset>
-			<legend>Sign In</legend>	  
-		<%= f.input :email %>
-		<%= f.input :password %>
+			<legend>Sign In</legend>
+			<%= f.input :email %>
+			<%= f.input :password %>
 
+	  	<% if devise_mapping.rememberable? -%>
+	    	<%= f.input :remember_me, as: :boolean, inline_label: "Remember Me", label: false %>
+	  	<% end -%>
 
-	  <% if devise_mapping.rememberable? -%>
-	    <div><%= f.input :remember_me, as: :boolean %></div>
-	  <% end -%>
-
-	  <div><%= f.button :submit, "Sign in" %></div>
-	</fieldset>
+	  	<%= f.button :submit, "Sign In", class: 'btn btn-primary btn-block' %>
+		</fieldset>
 	<% end %>
 
-	<%= render "devise/shared/links" %>
 	</div>
 
 	<div class="span8">
-		<h2>Signing in is easy and secure</h2>
+		<h2>Don't Have An Account? Sign Up!</h2>
+		<h3>Why Sign Up? Placeholder Text.</h3>
+		<p>
+			<%= image_tag "http://placekitten.com/g/200/300", class: 'pull-right' %>
+			Irony consectetur pug minim, sint fap anim ugh cosby sweater lo-fi deep v. Umami mcsweeney's narwhal actually terry richardson. Aliquip banjo you probably haven't heard of them Austin kogi in, pariatur put a bird on it portland meggings tofu fanny pack veniam. Officia quis brunch cray, fashion axe craft beer ugh plaid. Meggings disrupt intelligentsia, pork belly sustainable synth proident literally magna seitan before they sold out. Four loko anim officia, consectetur godard single-origin coffee chillwave gentrify tousled ethnic vegan vice eiusmod. Cupidatat flexitarian craft beer church-key quinoa, twee skateboard direct trade sriracha typewriter tattooed chambray sartorial dolore tempor.
+		</p>
+		<%= render "devise/shared/links" %>
 	</div>
 </div>

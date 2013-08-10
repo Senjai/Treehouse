@@ -10,13 +10,13 @@
 	<div class="navbar navbar-fixed-top">
 		<div class="navbar-inner">
 			<div class="container">
-				<%= link_to "Treebook", root_path, class: "brand" %>
+				<%= link_to "Treebook", root_path, class: 'brand' %>
 				<ul class="nav">
 					<li><%= link_to "All Statuses", feed_path %></li>
 				</ul>
 				<ul class="nav pull-right">
 					<% if user_signed_in? %>
-            <li><%= link_to 'Friends', user_friendships_path %></li>
+						<li><%= link_to 'Friends', user_friendships_path %></li>
 						<li><%= link_to current_user.full_name, edit_user_registration_path %></li>
 						<li><%= link_to "Log Out", logout_path %></li>
 					<% else %>
@@ -35,7 +35,7 @@
 				<%= message %>
 			</div>
 		<% end %>
-
+		    
 		<%= yield %>
 	</div>
 </body>

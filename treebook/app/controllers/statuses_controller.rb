@@ -60,9 +60,8 @@ class StatusesController < ApplicationController
   def update
     @status = current_user.statuses.find(params[:id])
     if params[:status] && params[:status].has_key?(:user_id)
-      params[:status].delete :user_id
+      params[:status].delete(:user_id) 
     end
-
     respond_to do |format|
       if @status.update_attributes(params[:status])
         format.html { redirect_to @status, notice: 'Status was successfully updated.' }
@@ -77,7 +76,7 @@ class StatusesController < ApplicationController
   # DELETE /statuses/1
   # DELETE /statuses/1.json
   def destroy
-    @status = Status.find(params[:id])
+    @status = current_user.statuses.find(params[:id])
     @status.destroy
 
     respond_to do |format|

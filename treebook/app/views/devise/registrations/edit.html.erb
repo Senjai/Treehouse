@@ -1,25 +1,32 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
-
-<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f| %>
-  <%= devise_error_messages! %>
-
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email %></div>
-
-  <div><%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
-  <%= f.password_field :password, :autocomplete => "off" %></div>
-
-  <div><%= f.label :password_confirmation %><br />
-  <%= f.password_field :password_confirmation %></div>
-
-  <div><%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
-  <%= f.password_field :current_password %></div>
-
-  <div><%= f.submit "Update" %></div>
+<%= page_header do %>
+  <h2>Edit My Profile</h2>
 <% end %>
 
-<h3>Cancel my account</h3>
+<%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, class: 'form-horizontal '}) do |f| %>
+  <%= devise_error_messages! %>
 
-<p>Unhappy? <%= link_to "Cancel my account", registration_path(resource_name), :data => { :confirm => "Are you sure?" }, :method => :delete %>.</p>
+  <fieldset>
+    <legend>About Me</legend>
+    <%= f.input :first_name, input_html: { class: 'input-xxlarge' } %>
+    <%= f.input :last_name, input_html: { class: 'input-xxlarge' } %>
+    <%= f.input :email, input_html: { class: 'input-xxlarge' } %>
+  </fieldset>
 
-<%= link_to "Back", :back %>
+  <fieldset>
+    <legend>Update Password</legend>
+    <%= f.input :password, hint: "Leave blank if you don't want to change it", input_html: { class: 'input-xxlarge', autocomplete: 'off' } %>
+    <%= f.input :password_confirmation, input_html: { class: 'input-xxlarge', autocomplete: 'off' } %>
+  </fieldset>
+
+  <fieldset>
+    <legend>Confirm Changes</legend>
+    <%= f.input :current_password, hint: "We need your current password to confirm your changes", input_html: { class: 'input-xxlarge', autocomplete: 'off' } %>
+  </fieldset>
+
+  <div class="form-actions">
+    <%= f.submit "Update", class: 'btn btn-primary' %>
+    <%= link_to "Back", root_path, class: 'btn' %>
+    <%= link_to "Cancel my account", registration_path(resource_name), :data => { :confirm => "Are you sure?" }, :method => :delete, class: 'btn btn-danger pull-right' %>
+  </div>
+<% end %>
+

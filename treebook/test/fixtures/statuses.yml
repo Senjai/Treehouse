@@ -9,5 +9,5 @@ two:
   user: jason
 
 three:
-  content: My status
+  content: "Hi I'm Jim"
   user: jim

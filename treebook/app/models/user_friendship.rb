@@ -1,8 +1,8 @@
 class UserFriendship < ActiveRecord::Base
-  attr_accessible :user, :friend, :user_id, :friend_id, :state
-
   belongs_to :user
   belongs_to :friend, class_name: 'User', foreign_key: 'friend_id'
+
+  attr_accessible :user, :friend, :user_id, :friend_id, :state
 
   after_destroy :delete_mutual_friendship!
 
@@ -24,12 +24,12 @@ class UserFriendship < ActiveRecord::Base
 
   validate :not_blocked
 
-  def self.request (user1, user2)
+  def self.request(user1, user2)
     transaction do
       friendship1 = create(user: user1, friend: user2, state: 'pending')
       friendship2 = create(user: user2, friend: user1, state: 'requested')
 
-      friendship1.send_request_email unless friendship1.new_record?
+      friendship1.send_request_email if !friendship1.new_record?
       friendship1
     end
   end
@@ -37,7 +37,7 @@ class UserFriendship < ActiveRecord::Base
   def not_blocked
     if UserFriendship.exists?(user_id: user_id, friend_id: friend_id, state: 'blocked') ||
        UserFriendship.exists?(user_id: friend_id, friend_id: user_id, state: 'blocked')
-      errors.add(:base, "Friendship cannot be added.")
+      errors.add(:base, "The friendship cannot be added.")
     end
   end
 
@@ -54,8 +54,7 @@ class UserFriendship < ActiveRecord::Base
   end
 
   def accept_mutual_friendship!
-    # TODO: Refactor
-    # Grab the mutual friendship and update the state without using
+    # Grab the mutal friendship and update the state without using
     # the state machine so as not to invoke callbacks.
     mutual_friendship.update_attribute(:state, 'accepted')
   end

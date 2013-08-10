@@ -1,17 +1,32 @@
-<h2>Sign up</h2>
-
-<%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
-  <%= devise_error_messages! %>
-  <%= f.input :first_name %>
-  <%= f.input :last_name %>
-  <%= f.input :profile_name %>
-  <%= f.input :email %>
-  <%= f.input :password %>
-  <%= f.input :password_confirmation %>
-
-  <div class="form-actions">
-    <%= f.submit 'Sign Up', class: 'btn btn-primary' %>
-  </div>
+<%= page_header do %>
+  <h1>Sign Up For Treebook</h1>
 <% end %>
 
-<%= render "devise/shared/links" %>
+<div class="row">
+  <div class="span6">
+    <h2>Your Information</h2>
+    <%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), html: { class: 'form-vertical' }) do |f| %>
+      <%= devise_error_messages! %>
+      <%= f.input :first_name, input_html: { class: 'input-xlarge' } %>
+      <%= f.input :last_name, input_html: { class: 'input-xlarge' } %>
+      <%= f.input :profile_name, input_html: { class: 'input-xlarge' } %>
+      <%= f.input :email, input_html: { class: 'input-xlarge' } %>
+      <%= f.input :password, input_html: { class: 'input-xlarge', autocomplete: 'off' } %>
+      <%= f.input :password_confirmation, input_html: { class: 'input-xlarge', autocomplete: 'off' } %>
+      <div class="form-actions">
+        <%= f.submit "Sign up", class: 'btn btn-primary' %><br />
+        <%= render "devise/shared/links" %>
+      </div>
+    <% end %>
+  </div>
+  <div class="span6">
+    <h2>Why Sign Up?</h2>
+    <p>
+      <strong>Placeholder text and kittens</strong>
+      Irony consectetur pug minim, sint fap anim ugh cosby sweater lo-fi deep v. Umami mcsweeney's narwhal actually terry richardson. Aliquip banjo you probably haven't heard of them Austin kogi in, pariatur put a bird on it portland meggings tofu fanny pack veniam. Officia quis brunch cray, fashion axe craft beer ugh plaid. Meggings disrupt intelligentsia, pork belly sustainable synth proident literally magna seitan before they sold out. Four loko anim officia, consectetur godard single-origin coffee chillwave gentrify tousled ethnic vegan vice eiusmod. Cupidatat flexitarian craft beer church-key quinoa, twee skateboard direct trade sriracha typewriter tattooed chambray sartorial dolore tempor.</p>
+
+      <p><%= image_tag "http://placekitten.com/g/100/120", class: 'pull-right' %>
+        Nihil locavore mollit, nisi plaid aesthetic 90's. Butcher brunch typewriter, mlkshk messenger bag odio post-ironic seitan fanny pack nesciunt selfies enim before they sold out velit street art. Before they sold out quis plaid beard nulla commodo vero, pariatur etsy consequat pork belly PBR stumptown cillum banksy. Letterpress gluten-free DIY, bicycle rights trust fund intelligentsia fixie iphone high life church-key. Assumenda truffaut plaid, ex umami dreamcatcher aliquip. 3 wolf moon food truck officia, meggings tousled PBR commodo consectetur vero four loko enim etsy american apparel farm-to-table. Aute irony lomo incididunt +1.
+      </p>
+  </div>
+</div>

@@ -10,7 +10,7 @@ class UserFriendshipsController < ApplicationController
   def accept
     @user_friendship = current_user.user_friendships.find(params[:id])
     if @user_friendship.accept!
-      flash[:success] = "You are now friends with #{@user_friendship.friend.first_name}."
+      flash[:success] = "You are now friends with #{@user_friendship.friend.first_name}"
     else
       flash[:error] = "That friendship could not be accepted."
     end
@@ -20,7 +20,7 @@ class UserFriendshipsController < ApplicationController
   def block
     @user_friendship = current_user.user_friendships.find(params[:id])
     if @user_friendship.block!
-      flash[:success] = "You have blocked #{@user_friendship.friend.first_name}"
+      flash[:success] = "You have blocked #{@user_friendship.friend.first_name}."
     else
       flash[:error] = "That friendship could not be blocked."
     end
@@ -33,11 +33,10 @@ class UserFriendshipsController < ApplicationController
       raise ActiveRecord::RecordNotFound if @friend.nil?
       @user_friendship = current_user.user_friendships.new(friend: @friend)
     else
-      flash[:error] = "Friend Required"
+      flash[:error] = "Friend required"
     end
-  rescue ActiveRecord::RecordNotFound => e
+  rescue ActiveRecord::RecordNotFound
     render file: 'public/404', status: :not_found
-    logger.error(e)
   end
 
   def create
@@ -46,8 +45,8 @@ class UserFriendshipsController < ApplicationController
       @user_friendship = UserFriendship.request(current_user, @friend)
       respond_to do |format|
         if @user_friendship.new_record?
-          format.html do
-            flash[:error] = "There was a problem creating that friend request."
+          format.html do 
+            flash[:error] = "There was problem creating that friend request."
             redirect_to profile_path(@friend)
           end
           format.json { render json: @user_friendship.to_json, status: :precondition_failed }
@@ -60,7 +59,7 @@ class UserFriendshipsController < ApplicationController
         end
       end
     else
-      flash[:error] = "Friend Required"
+      flash[:error] = "Friend required"
       redirect_to root_path
     end
   end
@@ -71,24 +70,24 @@ class UserFriendshipsController < ApplicationController
   end
 
   def destroy
-    if current_user.user_friendships.find(params[:id]).destroy
-      flash[:success] = "Friendship Destroyed"
+    @user_friendship = current_user.user_friendships.find(params[:id])
+    if @user_friendship.destroy
+      flash[:success] = "Friendship destroyed"
     end
     redirect_to user_friendships_path
   end
 
   private
-
   def friendship_association
     case params[:list]
     when nil
       current_user.user_friendships
     when 'blocked'
       current_user.blocked_user_friendships
-    when 'active'
-      current_user.accepted_user_friendships
     when 'pending'
       current_user.pending_user_friendships
+    when 'accepted'
+      current_user.accepted_user_friendships
     when 'requested'
       current_user.requested_user_friendships
     end

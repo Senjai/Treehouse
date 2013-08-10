@@ -4,7 +4,7 @@ class UserNotifier < ActionMailer::Base
   def friend_requested(user_friendship_id)
     user_friendship = UserFriendship.find(user_friendship_id)
 
-    @user = user_friendship.user
+    @user  = user_friendship.user
     @friend = user_friendship.friend
 
     mail to: @friend.email,
@@ -18,6 +18,6 @@ class UserNotifier < ActionMailer::Base
     @friend = user_friendship.friend
 
     mail to: @user.email,
-         subject: "#{@friend.first_name} has accepted your friend request"
+         subject: "#{@friend.first_name} has accepted your friend request."
   end
 end

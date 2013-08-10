@@ -1,18 +1,24 @@
-<div class="page-header">
-  <h1><%= @user.full_name %></h1>
-</div>
-
-<% if signed_in? %>
-  <div id="friend-status">
-    <% if current_user.friends.include?(@user) || current_user.pending_friends.include?(@user) %>
-      <%= link_to "Edit Friendship", edit_user_friendship_path(friend_id: @user), class: "btn" %>
-    <% else %>
-      <%= link_to "Add Friend", new_user_friendship_path(friend_id: @user), class: "btn", id: 'add-friendship', data: { friend_id: @user.to_param } %>
-    <% end %>
-  </div>
+<%= page_header do %>
+  <h1>
+    <%= avatar_profile_link @user, {}, class: '' %>
+    <%= @user.full_name %>
+  </h1>
 <% end %>
 
+<% if signed_in? %>
+<div id="friend-status">
+  <% if current_user.friends.include?(@user) || current_user.pending_friends.include?(@user) %>
+    <%= link_to "Edit Friendship", edit_user_friendship_path(friend_id: @user), class: 'btn' %>
+  <% else %>
+    <%= link_to "Add Friend", new_user_friendship_path(friend_id: @user), class: 'btn', id: 'add-friendship', data: { friend_id: @user.to_param } %>
+  <% end %>
+</div>
+<% end %>
+
+<br />
+
 <% if @statuses %>
+  <h3><%= @user.first_name %>'s status updates:</h3>
   <% @statuses.each do |status| %>
     <div class="well">
       <%= status.content %>

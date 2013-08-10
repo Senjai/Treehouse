@@ -11,23 +11,22 @@ class StatusesControllerTest < ActionController::TestCase
     assert_not_nil assigns(:statuses)
   end
 
-  test "should not display a blocked users post when logged in" do
-    sign_in users(:jason)
+  test "should display user's posts when not logged in" do
     users(:blocked_friend).statuses.create(content: 'Blocked status')
-    users(:mikethefrog).statuses.create(content: 'Non-blocked status')
-
+    users(:jim).statuses.create(content: 'Non-blocked status')
     get :index
     assert_match /Non\-blocked status/, response.body
-    assert_no_match /Blocked status/, response.body
+    assert_match /Blocked\ status/, response.body
   end
 
-  test "should display all users posts when not logged in" do
-    users(:blocked_friend).statuses.create(content: 'Blocked status')
-    users(:mikethefrog).statuses.create(content: 'Non-blocked status')
 
+  test "should not display blocked user's posts when logged in" do
+    sign_in users(:jason)
+    users(:blocked_friend).statuses.create(content: 'Blocked status')
+    users(:jim).statuses.create(content: 'Non-blocked status')
     get :index
     assert_match /Non\-blocked status/, response.body
-    assert_match /Blocked status/, response.body
+    assert_no_match /Blocked\ status/, response.body
   end
 
   test "should be redirected when not logged in" do
@@ -55,8 +54,18 @@ class StatusesControllerTest < ActionController::TestCase
       post :create, status: { content: @status.content }
     end
 
-    assert_equal users(:jason), assigns(:status).user
     assert_redirected_to status_path(assigns(:status))
+  end
+
+  test "should create status for the current user when logged in" do
+    sign_in users(:jason)
+
+    assert_difference('Status.count') do
+      post :create, status: { content: @status.content, user_id: users(:jim).id }
+    end
+
+    assert_redirected_to status_path(assigns(:status))
+    assert_equal assigns(:status).user_id, users(:jason).id
   end
 
   test "should show status" do
@@ -91,33 +100,26 @@ class StatusesControllerTest < ActionController::TestCase
   test "should update status for the current user when logged in" do
     sign_in users(:jason)
     put :update, id: @status, status: { content: @status.content, user_id: users(:jim).id }
-    assert_equal users(:jason).id, assigns(:status).user_id
     assert_redirected_to status_path(assigns(:status))
+    assert_equal assigns(:status).user_id, users(:jason).id
   end
 
-  test "should not update a status if nothing has changed" do
+  test "should not update the status if nothing has changed" do
     sign_in users(:jason)
     put :update, id: @status
-    assert_equal users(:jason).id, assigns(:status).user_id
     assert_redirected_to status_path(assigns(:status))
+    assert_equal assigns(:status).user_id, users(:jason).id
   end
 
+
+
+
   test "should destroy status" do
+    sign_in users(:jason)
     assert_difference('Status.count', -1) do
       delete :destroy, id: @status
     end
 
     assert_redirected_to statuses_path
-  end
-
-  test "should create status for the current user when logged in" do
-    sign_in users(:jason)
-
-    assert_difference('Status.count') do
-      post :create, status: { content: @status.content, user_id: users(:jim).id }
-    end
-
-    assert_equal users(:jason), assigns(:status).user
-    assert_redirected_to status_path(assigns(:status))
   end
 end

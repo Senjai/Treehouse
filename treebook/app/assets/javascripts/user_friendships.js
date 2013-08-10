@@ -1,7 +1,6 @@
 window.userFriendships = [];
 
 $(document).ready(function() {
-
   $.ajax({
     url: Routes.user_friendships_path({format: 'json'}),
     dataType: 'json',
@@ -9,20 +8,20 @@ $(document).ready(function() {
     success: function(data) {
       window.userFriendships = data;
     }
-  })
+  });
 
-  $("#add-friendship").click(function(event) {
+  $('#add-friendship').click(function(event) {
     event.preventDefault();
-    var addFriendshipButton = $(this);
-
+    var addFriendshipBtn = $(this);
     $.ajax({
-      url: Routes.user_friendships_path({user_friendship: { friend_id: addFriendshipButton.data('friendId') }}),
+      url: Routes.user_friendships_path({user_friendship: { friend_id: addFriendshipBtn.data('friendId') }}),
       dataType: 'json',
       type: 'POST',
       success: function(e) {
-        addFriendshipButton.hide();
+        addFriendshipBtn.hide();
         $('#friend-status').html("<a href='#' class='btn btn-success'>Friendship Requested</a>");
       }
     });
   });
+
 });
