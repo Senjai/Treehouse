@@ -11,6 +11,7 @@ gem 'paperclip'
 
 group :development do
   gem 'thin'
+  gem 'pry'
 end
 
 group :test do

@@ -1,4 +1,4 @@
-<%= simple_form_for(@status, html: {class: "form-horizontal"}) do |f| %>
+<%= simple_form_for(@status, html: {class: "form-horizontal", multipart: true}) do |f| %>
   <% if @status.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@status.errors.count, "error") %> prohibited this status from being saved:</h2>
@@ -13,6 +13,15 @@
 
   <%= f.input :content, input_html: { rows: 4, class: 'input-xxlarge' } %>
   <%= f.fields_for :document do |document_fields| %>
+    <% if document_fields.object.attachment? %>
+    <div class="control-group">
+      <label class="control-label">Current Attachment</label>
+      <div class="controls">
+        <%= link_to document_fields.object.attachment_file_name, document_fields.object.attachment.url %>
+      </div>
+    </div>
+    <%= document_fields.input :remove_attachment, as: :boolean, label: "Remove Attachment?" %>
+    <% end %>
     <%= document_fields.input :attachment, as: :file %>
   <% end %>
 

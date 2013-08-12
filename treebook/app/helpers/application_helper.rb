@@ -1,5 +1,14 @@
 module ApplicationHelper
 
+  def status_document_link(status)
+    if status.document && status.document.attachment?
+      html = ""
+      html << content_tag(:span, "Attachment", class: "label label-info")
+      html << link_to(status.document.attachment_file_name, status.document.attachment.url)
+      html.html_safe
+    end
+  end
+
 	def can_display_status?(status)
 		signed_in? && !current_user.has_blocked?(status.user) || !signed_in?
 	end

@@ -15,11 +15,16 @@
     </p>
 
     <hr />
+
+    <%= status_document_link(@status) %>
+
+    <hr />
+
     <div class="meta">
       <%= link_to 'Back', statuses_path %>
       <% if signed_in? && @status.user == current_user %>
         |
-        <%= link_to "Edit", edit_status_path(@status) %> | 
+        <%= link_to "Edit", edit_status_path(@status) %> |
         <%= link_to "Delete", @status, method: :delete, data: { confirm: "Are you sure your want to delete this status?"} %>
       <% end %>
     </div>
