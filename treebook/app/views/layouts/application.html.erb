@@ -16,6 +16,7 @@
 				</ul>
 				<ul class="nav pull-right">
 					<% if user_signed_in? %>
+            <li><%= link_to "Albums", albums_path(current_user) %></li>
 						<li><%= link_to 'Friends', user_friendships_path %></li>
 						<li><%= link_to current_user.full_name, edit_user_registration_path %></li>
 						<li><%= link_to "Log Out", logout_path %></li>
@@ -35,7 +36,7 @@
 				<%= message %>
 			</div>
 		<% end %>
-		    
+
 		<%= yield %>
 	</div>
 </body>

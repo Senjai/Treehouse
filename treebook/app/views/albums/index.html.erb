@@ -1,0 +1,15 @@
+<%= page_header do %>
+<h1>Listing albums</h1>
+<% end %>
+
+<ul class="thumbnails">
+<% @albums.each do |album| %>
+  <li class="span3">
+    <%= link_to album_thumbnail(album), album_pictures_path(album) %><br />
+    <%= link_to "View Album", album_pictures_path(@user, album) %>
+  </li>
+<% end %>
+</ul>
+<br />
+
+<%= link_to 'New Album', new_album_path %>
