@@ -1,29 +1,19 @@
-<h1>Listing pictures</h1>
-
-<table>
-  <tr>
-    <th>Album</th>
-    <th>User</th>
-    <th>Caption</th>
-    <th>Description</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @pictures.each do |picture| %>
-  <tr>
-    <td><%= picture.album %></td>
-    <td><%= picture.user %></td>
-    <td><%= picture.caption %></td>
-    <td><%= picture.description %></td>
-    <td><%= link_to 'Show', picture %></td>
-    <td><%= link_to 'Edit', edit_picture_path(picture) %></td>
-    <td><%= link_to 'Destroy', picture, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
+<%= page_header do %>
+<%= link_to 'Add Picture', new_album_picture_path(current_user, @album), class: 'btn pull-right' %>
+<h1><%= @album.title %></h1>
 <% end %>
-</table>
 
-<br />
-
-<%= link_to 'New Picture', new_picture_path %>
+<ul class="thumbnails">
+<% @pictures.each do |picture| %>
+<li>
+  <div class="thumbnail">
+  <%= link_to image_tag(picture.asset.url(:small)), album_picture_path(@user, @album, picture) %>
+  <br />
+  <div class="caption">
+    <%= (picture.caption + "<br />").html_safe if picture.caption? %>
+    <%= link_to 'View full size', album_picture_path(@user, @album, picture) %>
+  </div>
+  </div>
+</li>
+<% end %>
+</ul>
